@@ -56,7 +56,7 @@ const OurService = () => {
           </div>
         </div>
       </div>
-            <Footer/>
+            {/* <Footer/> */}
     </div>
   );
 };
