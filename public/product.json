@@ -46,5 +46,22 @@
     "price": 5.99,
     "image": "https://media.wired.com/photos/5bf3448d600e05096052e04e/master/pass/popsocket.jpg",
     "category": "popular"
+  },
+  {
+    "_id": "7",
+    "name": "Pop Socket",
+    "description": "A collapsible grip and stand for your phone, with various designs available.",
+    "price": 5.99,
+    "image": "https://media.wired.com/photos/5bf3448d600e05096052e04e/master/pass/popsocket.jpg",
+    "category": "Swags"
+  },
+  {
+    "_id": "8",
+    "name": "Pop Socket",
+    "description": "A collapsible grip and stand for your phone, with various designs available.",
+    "price": 5.99,
+    "image": "https://media.wired.com/photos/5bf3448d600e05096052e04e/master/pass/popsocket.jpg",
+    "category": "Accessories"
   }
+  
 ]

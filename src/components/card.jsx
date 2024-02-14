@@ -10,7 +10,7 @@ const Card = ({ item }) => {
   return (
     <div className="card shadow-xl relative mr-5 md:my-5">
       <div
-        className={`rating gap-1 absolute right-2 top-2 p-4 heartStar bg-red-700 ${
+        className={`rating gap-1 absolute right-2 top-2 p-4 heartStar bg-red-700 rounded-md z-10 ${
           isHeartFilter ? "text-yellow-200" : "text-white"
         }`}
         onClick={handleHeartClick}
@@ -29,7 +29,7 @@ const Card = ({ item }) => {
           <img
             src={image}
             alt=""
-            className="hover:scale-105 transition-all duration-300 md:h-60 object-cover "
+            className="hover:scale-105 transition-all duration-300 md:h-60 object-cover  rounded-md  h-15 w-15"
           />
         </figure>
       </Link>
