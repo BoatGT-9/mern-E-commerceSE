@@ -231,17 +231,43 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
-
-router.delete("/:email", async(req,res)=>{
-    try{
-        const cart = await cartModel.findByIdAndDelete(req.params.email);
-        if(!cart){
-            return res.status(404).json({message:"cart Not found"});
-        } 
-        res.status(200).json(cart);
-    } catch(error){
-        res.status(500).json({ message:error.message});
+/**
+ * @swagger
+ * /Carts/{email}:
+ *   delete:
+ *     summary: Delete all carts for a specific email
+ *     tags: [Carts]
+ *     parameters:
+ *       - in: path
+ *         name: email
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The email for which to delete all carts
+ *     responses:
+ *       200:
+ *         description: All carts for the specified email are deleted successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Carts'
+ *       404:
+ *         description: Carts Not Found for the specified email
+ *       500:
+ *         description: Some error happened
+ */
+router.delete("/clear/:email", async (req, res) => {
+    const { email } = req.params;
+    try {
+      const deletedByEmail = await cartModel.deleteMany({ email });
+      if (deletedByEmail.deletedCount === 0) {
+        return res
+          .status(404)
+          .json({ message: "Carts Not Found for the specified email" });
+      }
+      res.status(200).json(deletedByEmail)
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
-})
+  });
 module.exports = router;
