@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import { useContext } from "react";
 
-const ProtectedRoute = ({children}) =>{
+const PrivateRoute = ({children}) =>{
     const {user} = useContext(AuthContext);
     const location = useLocation();
     if (user) {
@@ -11,5 +11,5 @@ const ProtectedRoute = ({children}) =>{
     }
     return <Navigate to="/SignIn" state={{from:location}} replace/>
 }
-export default ProtectedRoute;
+export default PrivateRoute;
 

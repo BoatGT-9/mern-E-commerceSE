@@ -1,22 +1,62 @@
 const express = require("express");
+const dotenv = require("dotenv");
 const cors = require("cors");
-const { default: mongoose } = require("mongoose");
-require("dotenv").config();
+const mongoose = require("mongoose");
+const productRouter = require("./routers/product.router");
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
+const swaggerDefinition = {
+  openapi: "3.0.0",
+  info: {
+    title: "Express API for JSONPlaceholder",
+    version: "1.0.0",
+    description:
+      "This is a REST API application made with Express. It retrieves data from JSONPlaceholder.",
+    license: {
+      name: "Licensed Under MIT",
+      url: "https://spdx.org/licenses/MIT.html",
+    },
+    contact: {
+      name: "JSONPlaceholder",
+      url: "https://jsonplaceholder.typicode.com",
+    },
+  },
+  servers: [
+    {
+      url: "http://localhost:5000",
+      description: "Development server",
+    },
+  ],
+};
+
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: ["./routes/*.js"],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+
+//config .env
+dotenv.config();
 const app = express();
-
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+const CLIENT_URL = process.env.CLIENT_URL;
+app.use(cors({ credentials: true, origin: CLIENT_URL }));
 app.use(express.json());
 
+//Databse Connection
 const MONGODB_URL = process.env.MONGODB_URL;
-mongoose.connect(MONGODB_URL);
-
-app.get("/", (req, res) => {
-  res.send("<h1> ติดละ  Server run now!!!</h1>");
+mongoose.connect(MONGODB_URL);  
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));app.get("/", (req, res) => {
+  res.send("<h1>This is a RESTful API for SE Shop</h1>");
 });
 
+//Add Router
+app.use("/products", productRouter);
 
+//Run Server
 const PORT = process.env.PORT;
-app.listen(PORT, () => {
-  console.log("SERVER is running on http://localhost:" + PORT);
+const server = app.listen(PORT, () => {
+  console.log("Server is running on http://localhost:" + PORT);
 });

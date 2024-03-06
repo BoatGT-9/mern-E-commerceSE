@@ -35,7 +35,7 @@ const SignIn = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        alert("google SignUp Success");
+        alert("google Sign Up Success");
         document.getElementById("login").close();
       })
       .catch((error) => {
