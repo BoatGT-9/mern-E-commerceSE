@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const productRouter = require("./routes/product.routes");
-const CartRouter = require("./routes/cart.routes")
+const cartRouter = require("./routes/cart.routes");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
@@ -55,7 +55,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));app.get("/", (re
 
 //Add Router
 app.use("/products", productRouter);
-app.use("/carts", CartRouter);
+app.use("/carts",cartRouter)
 
 //Run Server
 const PORT = process.env.PORT;
