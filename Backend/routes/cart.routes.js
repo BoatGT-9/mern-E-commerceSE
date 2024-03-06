@@ -232,4 +232,16 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+
+router.delete("/:email", async(req,res)=>{
+    try{
+        const cart = await cartModel.findByIdAndDelete(req.params.email);
+        if(!cart){
+            return res.status(404).json({message:"cart Not found"});
+        } 
+        res.status(200).json(cart);
+    } catch(error){
+        res.status(500).json({ message:error.message});
+    }
+})
 module.exports = router;
