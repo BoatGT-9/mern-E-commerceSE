@@ -2,7 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const productRouter = require("./routers/product.router");
+const productRouter = require("./routes/product.routes");
+const CartRouter = require("./routes/cart.routes")
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
@@ -47,13 +48,14 @@ app.use(express.json());
 
 //Databse Connection
 const MONGODB_URL = process.env.MONGODB_URL;
-mongoose.connect(MONGODB_URL);  
+mongoose.connect(MONGODB_URL);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));app.get("/", (req, res) => {
   res.send("<h1>This is a RESTful API for SE Shop</h1>");
 });
 
 //Add Router
 app.use("/products", productRouter);
+app.use("/carts", CartRouter);
 
 //Run Server
 const PORT = process.env.PORT;
