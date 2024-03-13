@@ -1,5 +1,6 @@
-import { createContext, useState, useEffect } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 import app from "../firebase/firebase.config";
+export const AuthContext = createContext();
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -7,55 +8,64 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   onAuthStateChanged,
-  signOut,
   updateProfile,
+  signOut,
 } from "firebase/auth";
 
-export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
-  // Initialize Firebase Authentication and get a reference to the service
   const auth = getAuth(app);
+  const [user, setUser] = useState(null);
+  const [reload, setReload] = useState(false);
+
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
+
+  const login = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const signUpWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
+  };
+
+  const logout = () => {
+    return signOut(auth);
+  };
+
   const updateUserProfile = ({ name, photoURL }) => {
+    console.log(photoURL);
     return updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: photoURL,
     });
   };
-  const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
-  };
-  const logout = () => {
-    return signOut(auth);
-  };
-  const singUpWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider);
-  };
-  const [user, setUser] = useState(null);
+
   const authInfo = {
     user,
     setUser,
-    createUser,
     login,
-    singUpWithGoogle,
     logout,
     updateUserProfile,
+    createUser,
+    signUpWithGoogle,
+    reload,
+    setReload,
   };
-  // check if user
+  //check if user is Logged in
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-
+      setUser(currentUser);
       if (currentUser) {
         setUser(currentUser);
       }
-      return () => {
-        return unsubscribe();
-      };
     });
+    return () => {
+      return unsubscribe();
+    };
   }, [auth]);
+
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

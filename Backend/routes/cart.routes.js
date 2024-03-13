@@ -100,7 +100,7 @@ router.get("/", async (req, res) => {
 router.get("/:email", async (req, res) => {
   try {
     const cartEmail = req.params.email;
-    const cart = await cartModel.findOne({ email: cartEmail });
+    const cart = await cartModel.find({ email: cartEmail });
     if (!cart) {
       return res.status(404).json({ message: "Cart Not Found" });
     }

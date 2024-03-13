@@ -28,6 +28,10 @@ const router = createBrowserRouter([
         path: "/update-profile",
         element: <UpdateProfile />,
       },
+      // {
+      //   path:"/carts",
+      //   element:x
+      // }
     ],
   },
   {

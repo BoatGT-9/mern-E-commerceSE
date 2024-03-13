@@ -56,9 +56,13 @@ const ProductList = () => {
     setFilterItems(sortedItems);
     setCurrenPage(1);
   };
+  
   const indexOfLastItem = itemPerPage * currentPage;
+  
   const indexOfFirstItem = indexOfLastItem - itemPerPage;
+
   const currentItems = filterItems.slice(indexOfFirstItem, indexOfLastItem);
+  
   const paginate = (pageNumber) => setCurrenPage(pageNumber);
   return (
     <div>
@@ -68,7 +72,7 @@ const ProductList = () => {
           <div className="text-center space-y-7 px-4">
             <h2 className="md:text-4xl text-4xl font-bold md:leading-snug leading-snug">
               Unleash Your Inner
-              <span className="text-red-700"> Geek</span>: <br />
+              <span className="text-red-700">Geek</span>: <br />
               shop our Exclusive Tech-themed Merchandise!
             </h2>
             <p className="text-xl text-[#4a4a4a]">
