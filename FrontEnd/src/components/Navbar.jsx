@@ -4,10 +4,12 @@ import Model from "./ProductCart";
 import { AuthContext } from "../context/AuthProvider";
 import Profile from "./Profile";
 import axios from "axios";
+import useCart from "../hook/Usecart";
 const Navbar = () => {
   const { user, reload, setReload } = useContext(AuthContext);
+  const [cart , refresh] = useCart();
   const [totalQuantity, setTotalQuantity] = useState(0);
-
+  console.log(cart);
   useEffect(() => {
     setReload(false);
     const fetchData = async () => {
@@ -22,7 +24,6 @@ const Navbar = () => {
           (total, cartItem) => total + cartItem.quantity,
           0
         );
-        console.log("iik");
         // console.log(data);
         console.log(sumQuantity);
         if (response.status === 200) {
@@ -162,11 +163,10 @@ const Navbar = () => {
                   />
                 </svg>
                 <span className="badge badge-sm indicator-item">
-                  {totalQuantity}
+                  {cart.length || 0 }
                 </span>
               </div>
             </div>
-
             {user ? (
               <>
                 <Profile user={user} />

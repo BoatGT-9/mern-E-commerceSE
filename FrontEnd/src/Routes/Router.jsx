@@ -1,12 +1,13 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
-import Home from "../pages/Home";
+import Home from "../pages/Home/Home";
 import ProductList from "../pages/shop/ProductList";
 import SignUp from "../components/SignUp";
 import SignIn from "../components/SignIn";
 import UpdateProfile from "../pages/UpdateProfile";
 import PrivateRouter from "../PrivateRouter/PrivateRouter";
+import Admin from "../pages/admin/Admin";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
         path: "/update-profile",
         element: <UpdateProfile />,
       },
+      
       // {
       //   path:"/carts",
       //   element:x
@@ -42,6 +44,10 @@ const router = createBrowserRouter([
     path: "/SignIn",
     element: <SignIn />,
   },
+  {
+    path:"/admin",
+    element: <Admin/>,
+  }
 ]);
 
 export default router;
